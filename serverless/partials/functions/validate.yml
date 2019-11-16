@@ -1,0 +1,20 @@
+name: ${self:provider.stage}-auth-post-validate
+handler: build/handlers/post-validate.handler
+tags:
+  post: validate
+events:
+  - http:
+      method: post
+      path: auth/validate
+      cors: ${file(partials/common/cors.yml)}
+      documentation:
+        summary: "POST Validate Tokens"
+        description: "Determine if tokens are still valid."
+        requestHeaders:
+          - name: "Authorization"
+            description: "Authorization token is needed to access the endpoint."
+        methodResponses:
+          - statusCode: "200"
+            requestModels:
+              "application/json": UserResponse
+          - statusCode: "500"

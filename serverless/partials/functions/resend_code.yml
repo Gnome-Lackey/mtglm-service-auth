@@ -1,0 +1,22 @@
+name: ${self:provider.stage}-auth-post-resend-confirmation-code
+handler: build/handlers/post-resend-code.handler
+tags:
+  post: resendCode
+events:
+  - http:
+      method: post
+      path: auth/resend_code
+      request:
+        schema:
+          application/json: ${file(models/requests/resend_code.json)}
+      cors: ${file(partials/common/cors.yml)}
+      documentation:
+        summary: "POST Resend Confirmation Code"
+        description: "Resend confirmation code for pending account."
+        requestModels:
+          "application/json": ResendCodeRequest
+        methodResponses:
+          - statusCode: "200"
+            requestModels:
+              "application/json": SuccessResponse
+          - statusCode: "500"

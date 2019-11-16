@@ -1,0 +1,44 @@
+api:
+  info:
+    version: "1"
+    title: "Authentication API"
+    description: "Authentication API to handle account creation, validation, and authentication."
+models:
+  - name: "ConfirmRegistrationRequest"
+    description: "Confirm account registration request body."
+    contentType: "application/json"
+    schema: ${file(models/requests/confirm_registration.json)}
+  - name: "LoginRequest"
+    description: "Login request body."
+    contentType: "application/json"
+    schema: ${file(models/requests/login.json)}
+  - name: "ResendCodeRequest"
+    description: "Resend confirmation code request body."
+    contentType: "application/json"
+    schema: ${file(models/requests/resend_code.json)}
+  - name: "SignUpRequest"
+    description: "Sign up request body."
+    contentType: "application/json"
+    schema: ${file(models/requests/sign_up.json)}
+  - name: "SuccessResponse"
+    description: "Sign up request body."
+    contentType: "application/json"
+    schema: ${file(models/responses/success.json)}
+  - name: "UserResponse"
+    description: "User response body."
+    contentType: "application/json"
+    schema: ${file(models/responses/user.json)}
+
+resources:
+  - path: ConfirmRegistration
+    description: Confirm account registration.
+  - path: Login
+    description: Authenticate with with league manager services.
+  - path: Logout
+    description: Un-authenticate with with league manager services.
+  - path: ResendCode
+    description: Resend account confirmation code.
+  - path: SignUp
+    description: Create a new account.
+  - path: Validate
+    description: Validate authentication tokens with with league manager services.

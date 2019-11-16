@@ -1,0 +1,29 @@
+name: ${self:provider.stage}-auth-post-login
+handler: build/handlers/post-login.handler
+timeout: 10
+tags:
+  post: login
+events:
+  - http:
+      method: post
+      path: auth/login
+      request:
+        schema:
+          application/json: ${file(models/requests/login.json)}
+      cors: ${file(partials/common/cors.yml)}
+      documentation:
+        summary: "POST Login"
+        description: "Handles authentication with league manager services."
+        requestModels:
+          "application/json": LoginRequest
+        methodResponses:
+          - statusCode: "200"
+            requestModels:
+              "application/json": UserResponse
+          - statusCode: "500"
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - cognito-idp:AdminInitiateAuth
+    Resource:
+      - ${env:USER_POOL_ARN}

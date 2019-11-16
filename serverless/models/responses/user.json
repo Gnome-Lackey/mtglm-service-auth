@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "User Response Schema",
+  "properties": {
+    "user": {
+      "type": "object",
+      "title": "User Schema",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "User Name Schema",
+          "pattern": "^[a-zA-Z0-9-'_ ]+$"
+        },
+        "id": {
+          "type": "string",
+          "title": "Password Schema",
+          "pattern": "^[a-zA-Z0-9-]+$"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email Schema"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Email Schema",
+          "pattern": "^[a-zA-Z0-9-'_ ]+$"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Email Schema",
+          "pattern": "^[a-zA-Z0-9-'_ ]+$"
+        },
+        "isFirstTimeLogin": {
+          "type": "boolean",
+          "title": "Email Schema"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Resend Code Request Schema",
+  "required": ["userName"],
+  "properties": {
+    "userName": {
+      "type": "string",
+      "title": "User Name Schema",
+      "pattern": "^[a-zA-Z0-9-'_ ]+$"
+    }
+  }
+}

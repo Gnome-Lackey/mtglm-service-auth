@@ -1,0 +1,28 @@
+name: ${self:provider.stage}-auth-post-sign-up
+handler: build/handlers/post-sign-up.handler
+tags:
+  post: validate
+events:
+  - http:
+      method: post
+      path: auth/signup
+      request:
+        schema:
+          application/json: ${file(models/requests/sign_up.json)}
+      cors: ${file(partials/common/cors.yml)}
+      documentation:
+        summary: "POST Account sign-up"
+        description: "Create a new account within league manager services."
+        requestModels:
+          "application/json": SignUpRequest
+        methodResponses:
+          - statusCode: "200"
+            requestModels:
+              "application/json": UserResponse
+          - statusCode: "500"
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - cognito-idp:ListUsers
+    Resource:
+      - ${env:USER_POOL_ARN}

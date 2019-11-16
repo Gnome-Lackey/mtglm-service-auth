@@ -1,0 +1,22 @@
+name: ${self:provider.stage}-auth-post-confirm-registration
+handler: build/handlers/post-confirm-registration.handler
+tags:
+  post: confirm
+events:
+  - http:
+      method: post
+      path: auth/confirm
+      request:
+        schema:
+          application/json: ${file(models/requests/confirm_registration.json)}
+      cors: ${file(partials/common/cors.yml)}
+      documentation:
+        summary: "POST Confirm Registration"
+        description: "Confirm account was successfully registered."
+        requestModels:
+          "application/json": ConfirmRegistrationRequest
+        methodResponses:
+          - statusCode: "200"
+            requestModels:
+              "application/json": SuccessResponse
+          - statusCode: "500"

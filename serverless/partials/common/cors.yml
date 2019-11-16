@@ -1,0 +1,10 @@
+origin: ${env:ALLOWED_ORIGIN}
+allowCredentials: true
+headers:
+  - "Content-Type"
+  - "X-Amz-Date"
+  - "Authorization"
+  - "X-Amz-User-Agent"
+  - "Access-Control-Allow-Credentials"
+  - "X-ID-Token"
+  - "X-Access-Token"
