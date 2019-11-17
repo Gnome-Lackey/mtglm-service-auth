@@ -24,6 +24,10 @@ plugins:
 custom:
   documentation: ${file(partials/documentation.yml)}
 
+resources:
+  - ${file(partials/cognito.yml)}
+  
+
 functions:
   ConfirmRegistration: ${file(partials/functions/confirm_registration.yml)}
   Login: ${file(partials/functions/login.yml)}
