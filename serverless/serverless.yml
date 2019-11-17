@@ -7,8 +7,14 @@ provider:
   region: us-east-1
   memorySize: 128
   environment:
-    USER_POOL_ID: ${env:USER_POOL_ID}
-    CLIENT_ID: ${env:CLIENT_ID}
+    USER_POOL_ID:
+      Fn::GetAtt:
+        - "CognitoUserPool"
+        - "Arn"
+    CLIENT_ID:
+      Fn::GetAtt:
+        - "CognitoUserPoolClient"
+        - "Arn"
     ALLOWED_ORIGIN: ${env:ALLOWED_ORIGIN}
 
 package:
