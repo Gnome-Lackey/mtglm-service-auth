@@ -26,4 +26,6 @@ iamRoleStatements:
     Action:
       - cognito-idp:AdminInitiateAuth
     Resource:
-      - ${env:USER_POOL_ARN}
+      Fn::GetAtt:
+        - "CognitoUserPool"
+        - "Arn"

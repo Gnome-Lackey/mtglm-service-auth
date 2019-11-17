@@ -25,4 +25,6 @@ iamRoleStatements:
     Action:
       - cognito-idp:ListUsers
     Resource:
-      - ${env:USER_POOL_ARN}
+      Fn::GetAtt:
+        - "CognitoUserPool"
+        - "Arn"

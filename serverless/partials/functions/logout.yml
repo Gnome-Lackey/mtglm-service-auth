@@ -24,4 +24,6 @@ iamRoleStatements:
     Action:
       - cognito-idp:GlobalSignOut
     Resource: 
-      - ${env:USER_POOL_ARN}
+      Fn::GetAtt:
+        - "CognitoUserPool"
+        - "Arn"
