@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-logout
+name: ${self:provider.stage}-mtglm-auth-post-logout
 handler: build/handlers/post-logout.handler
 timeout: 10
 tags:

@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-resend-confirmation-code
+name: ${self:provider.stage}-mtglm-auth-post-resend-code
 handler: build/handlers/post-resend-code.handler
 tags:
   post: resendCode

@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-confirm-registration
+name: ${self:provider.stage}-mtglm-auth-post-confirm
 handler: build/handlers/post-confirm-registration.handler
 tags:
   post: confirm
