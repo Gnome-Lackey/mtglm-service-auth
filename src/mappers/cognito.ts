@@ -29,7 +29,7 @@ export const toUpdateAttributeConfig = (AccessToken: string): UpdateUserAttribut
   AccessToken,
   UserAttributes: [
     {
-      Name: "custom:first_time_login",
+      Name: "custom:firstTimeLogin",
       Value: "0"
     }
   ]
@@ -72,7 +72,7 @@ export const toSignUpConfig = (clientId: string, data: NodeSignUp): SignUpReques
       Value: email
     },
     {
-      Name: "custom:first_time_login",
+      Name: "custom:firstTimeLogin",
       Value: "1"
     },
     {
