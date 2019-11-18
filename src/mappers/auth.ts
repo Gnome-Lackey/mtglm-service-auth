@@ -9,6 +9,9 @@ import { RequestSignUpBody } from "../models/Requests";
 import { NodeSignUp } from "../models/Nodes";
 import { ViewUser, ViewAuth } from "../models/Views";
 
+const getAttributeByName = (name: string, attrs: AttributeType[]): string =>
+  attrs.find((attr) => attr.Name === name).Value;
+
 export const toNodeSignUp = (data: RequestSignUpBody): NodeSignUp => {
   const { email, firstName, lastName, userName, password } = data;
 
@@ -22,19 +25,18 @@ export const toNodeAuth = (
 ): NodeAuth => {
   const { TokenType, AccessToken, IdToken, RefreshToken } = tokens;
 
-  const id = attributes.find((attr) => attr.Name === "sub").Value;
-  const email = attributes.find((attr) => attr.Name === "email").Value;
-  const isFirstTimeLogin = !!parseInt(
-    attributes.find((attr) => attr.Name === "custom:first_time_login").Value,
-    10
-  );
+  const id = getAttributeByName("sub", attributes);
+  const email = getAttributeByName("email", attributes);
+  const role = getAttributeByName("custom:role", attributes);
+  const isFirstTimeLogin = !!parseInt(getAttributeByName("custom:firstTimeLogin", attributes), 10);
 
   return {
     user: {
       name,
       id,
       email,
-      isFirstTimeLogin
+      isFirstTimeLogin,
+      accountType: role
     },
     tokens: {
       accessToken: `${TokenType} ${AccessToken}`,

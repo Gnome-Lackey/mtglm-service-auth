@@ -3,6 +3,7 @@ export interface NodeUser {
   id: string;
   email: string;
   isFirstTimeLogin: boolean;
+  accountType: string;
 }
 
 export interface NodeTokens {
