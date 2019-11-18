@@ -8,8 +8,10 @@ provider:
   memorySize: 128
   environment:
     ALLOWED_ORIGIN: ${env:ALLOWED_ORIGIN}
-    USER_POOL_ID: "arn:aws:cognito-idp:${self:provider.region}:*:userpool/CognitoUserPool"
-    CLIENT_ID: "arn:aws:cognito-idp:${self:provider.region}:*:userpoolclient/CognitoUserPoolClient"
+    USER_POOL_ID: 
+      Ref: CognitoUserPool
+    CLIENT_ID: 
+      Ref: CognitoUserPoolClient
 
 package:
   include:
