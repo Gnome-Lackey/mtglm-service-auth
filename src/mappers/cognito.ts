@@ -74,6 +74,10 @@ export const toSignUpConfig = (clientId: string, data: NodeSignUp): SignUpReques
     {
       Name: "custom:first_time_login",
       Value: "1"
+    },
+    {
+      Name: "custom:role",
+      Value: "user"
     }
   ];
 
