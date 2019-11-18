@@ -24,7 +24,4 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:ListUsers
-    Resource:
-      Fn::GetAtt:
-        - "CognitoUserPool"
-        - "Arn"
+    Resource: "arn:aws:cognito-idp:${self:provider.region}:*:userpool/CognitoUserPool"

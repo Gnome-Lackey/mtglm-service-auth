@@ -25,7 +25,4 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:AdminInitiateAuth
-    Resource:
-      Fn::GetAtt:
-        - "CognitoUserPool"
-        - "Arn"
+    Resource: "arn:aws:cognito-idp:${self:provider.region}:*:userpool/CognitoUserPool"

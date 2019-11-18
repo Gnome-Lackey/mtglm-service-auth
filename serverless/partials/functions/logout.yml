@@ -23,7 +23,4 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:GlobalSignOut
-    Resource: 
-      Fn::GetAtt:
-        - "CognitoUserPool"
-        - "Arn"
+    Resource: "arn:aws:cognito-idp:${self:provider.region}:*:userpool/CognitoUserPool"
