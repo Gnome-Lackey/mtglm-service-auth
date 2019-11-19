@@ -35,10 +35,22 @@ Resources:
       GenerateSecret: false
 
 Outputs:
+  UserPoolArn:
+    Value:
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
+          - Ref: "CognitoUserPool"
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolArn
   UserPoolId:
     Value:
       Ref: CognitoUserPool
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolId
 
   UserPoolClientId:
     Value:
       Ref: CognitoUserPoolClient
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolClientId
