@@ -22,6 +22,8 @@ export const login = async (data: RequestLoginBody): Promise<ViewAuth> => {
 
   const user = await cognito.getLoggedInUser(AccessToken);
 
+  console.log(JSON.stringify(user));
+
   const { UserAttributes, Username } = user;
 
   const node = authMapper.toNodeAuth(UserAttributes, tokens, Username);
@@ -67,6 +69,8 @@ export const validate = async (authorization: string): Promise<ResponseUserView>
   const token = parseToken(authorization);
 
   const result = await cognito.validate(token);
+
+  console.log(JSON.stringify(result));
 
   return { user: authMapper.toViewGetUser(result) };
 };
