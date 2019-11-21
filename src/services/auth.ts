@@ -1,19 +1,23 @@
-import * as cognito from "../clients/cognito";
+import * as cognito from "mtglm-service-sdk/build/clients/cognito";
 
-import * as authMapper from "../mappers/auth";
+import * as authMapper from "mtglm-service-sdk/build/mappers/auth";
 
-import { parseToken } from "../utils/token";
+import { parseToken } from "mtglm-service-sdk/build/utils/token";
 
-import { ViewAuth } from "../models/Views";
-import { ResponseSuccess, ResponseUserView } from "../models/Responses";
 import {
-  RequestLoginBody,
-  RequestConfirmRegistrationBody,
-  RequestResendConfirmationCodeBody,
-  RequestSignUpBody
-} from "../models/Requests";
+  AuthResponse,
+  LoginResponse,
+  SuccessResponse
+} from "mtglm-service-sdk/build/models/Responses";
 
-export const login = async (data: RequestLoginBody): Promise<ViewAuth> => {
+import {
+  LoginBodyRequest,
+  ConfirmRegistrationBodyRequest,
+  ResendConfirmationCodeBodyRequest,
+  SignUpBodyRequest
+} from "mtglm-service-sdk/build/models/Requests";
+
+export const login = async (data: LoginBodyRequest): Promise<LoginResponse> => {
   const { userName, password } = data;
 
   const tokens = await cognito.login(userName, password);
@@ -22,55 +26,58 @@ export const login = async (data: RequestLoginBody): Promise<ViewAuth> => {
 
   const user = await cognito.getLoggedInUser(AccessToken);
 
-  console.log(JSON.stringify(user));
+  const authNode = authMapper.toNodeAuth(user);
+  const tokensNode = authMapper.toNodeTokens(tokens);
 
-  const { UserAttributes, Username } = user;
-
-  const node = authMapper.toNodeAuth(UserAttributes, tokens, Username);
-
-  if (node.user.isFirstTimeLogin) {
-    await cognito.updateUserAttribute(AccessToken);
+  if (authNode.user.isFirstTimeLogin) {
+    await cognito.updateUserAttribute(AccessToken, [
+      {
+        Name: "custom:firstTimeLogin",
+        Value: "0"
+      }
+    ]);
   }
 
-  return authMapper.toViewAuth(node);
+  return {
+    body: authMapper.toResponseLogin(authNode),
+    headers: authMapper.toResponseLoginHeaders(tokensNode)
+  };
 };
 
-export const logout = async (authorization: string): Promise<ResponseSuccess> => {
+export const logout = async (authorization: string): Promise<SuccessResponse> => {
   const token = parseToken(authorization);
 
   return await cognito.logout(token);
 };
 
 export const confirmRegistration = async (
-  data: RequestConfirmRegistrationBody
-): Promise<ResponseSuccess> => {
+  data: ConfirmRegistrationBodyRequest
+): Promise<SuccessResponse> => {
   const { userName, verificationCode } = data;
 
   return await cognito.confirmRegistration(verificationCode, userName);
 };
 
 export const resendConfirmationCode = async (
-  data: RequestResendConfirmationCodeBody
-): Promise<ResponseSuccess> => {
+  data: ResendConfirmationCodeBodyRequest
+): Promise<SuccessResponse> => {
   const { userName } = data;
 
   return await cognito.resendConfirmationCode(userName);
 };
 
-export const signUp = async (data: RequestSignUpBody): Promise<ResponseUserView> => {
+export const signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => {
   const node = authMapper.toNodeSignUp(data);
 
-  const userId = await cognito.signUp(node);
+  const uid = await cognito.signUp(node);
 
-  return { user: authMapper.toViewSignUp(userId, node) };
+  return authMapper.toResponseSignUp(uid, node);
 };
 
-export const validate = async (authorization: string): Promise<ResponseUserView> => {
+export const validate = async (authorization: string): Promise<AuthResponse> => {
   const token = parseToken(authorization);
 
   const result = await cognito.validate(token);
 
-  console.log(JSON.stringify(result));
-
-  return { user: authMapper.toViewGetUser(result) };
+  return authMapper.toResponseValidate(result);
 };

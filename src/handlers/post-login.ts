@@ -1,12 +1,12 @@
-import { requestMiddleware } from "../middleware/request";
+import { requestAuthMiddleware } from "mtglm-service-sdk/build/middleware/requestAuth";
+
+import { LoginBodyRequest } from "mtglm-service-sdk/build/models/Requests";
+import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
 
 import * as authController from "../controllers/auth";
 
-import { LambdaResponse } from "../models/Lambda";
-import { RequestLoginBody } from "../models/Requests";
-
-module.exports.handler = requestMiddleware(
-  async (data: RequestLoginBody): Promise<LambdaResponse> => {
+module.exports.handler = requestAuthMiddleware(
+  async (data: LoginBodyRequest): Promise<LambdaResponse> => {
     const response = await authController.login(data);
 
     return response;

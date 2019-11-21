@@ -1,16 +1,16 @@
+import { logFailure, logSuccess } from "mtglm-service-sdk/build/utils/logger";
+import { handleError, handleSuccess } from "mtglm-service-sdk/build/utils/response";
+import {
+  LoginBodyRequest,
+  ResendConfirmationCodeBodyRequest,
+  SignUpBodyRequest,
+  ConfirmRegistrationBodyRequest
+} from "mtglm-service-sdk/build/models/Requests";
+import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
+
 import * as authService from "../services/auth";
 
-import { logFailure, logSuccess } from "../utils/logger";
-import { handleError, handleSuccess } from "../utils/response";
-import {
-  RequestLoginBody,
-  RequestResendConfirmationCodeBody,
-  RequestSignUpBody,
-  RequestConfirmRegistrationBody
-} from "../models/Requests";
-import { LambdaResponse } from "../models/Lambda";
-
-export const login = async (data: RequestLoginBody): Promise<LambdaResponse> => {
+export const login = async (data: LoginBodyRequest): Promise<LambdaResponse> => {
   try {
     const result = await authService.login(data);
 
@@ -39,7 +39,7 @@ export const logout = async (authorization: string): Promise<LambdaResponse> => 
 };
 
 export const confirmRegistration = async (
-  data: RequestConfirmRegistrationBody
+  data: ConfirmRegistrationBodyRequest
 ): Promise<LambdaResponse> => {
   try {
     const result = await authService.confirmRegistration(data);
@@ -55,7 +55,7 @@ export const confirmRegistration = async (
 };
 
 export const resendConfirmationCode = async (
-  data: RequestResendConfirmationCodeBody
+  data: ResendConfirmationCodeBodyRequest
 ): Promise<LambdaResponse> => {
   try {
     const result = await authService.resendConfirmationCode(data);
@@ -70,7 +70,7 @@ export const resendConfirmationCode = async (
   }
 };
 
-export const signUp = async (data: RequestSignUpBody): Promise<LambdaResponse> => {
+export const signUp = async (data: SignUpBodyRequest): Promise<LambdaResponse> => {
   try {
     const result = await authService.signUp(data);
 
