@@ -19,18 +19,6 @@ Resources:
             MinValue: 0
             MaxValue: 1
         -   
-          AttributeDataType: "Number"
-          Mutable: true
-          Name: "totalWins"
-          NumberAttributeConstraints: 
-            MinValue: 0
-        -   
-          AttributeDataType: "Number"
-          Mutable: true
-          Name: "totalLosses"
-          NumberAttributeConstraints: 
-            MinValue: 0
-        -   
           AttributeDataType: "String"
           Mutable: true
           Name: "role"
