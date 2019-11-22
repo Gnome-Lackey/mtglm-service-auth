@@ -29,3 +29,11 @@ iamRoleStatements:
         - "" 
         - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
           - Ref: "CognitoUserPool"
+  - Effect: Allow
+    Action:
+      - dynamodb:PutPlayer
+      - dynamodb:UpdatePlayer
+      - dynamodb:GetPlayer
+      - dynamodb:BatchGetPlayer
+    Resource:
+      - Fn::ImportValue: ${self:provider.stage}-PlayerTableArn

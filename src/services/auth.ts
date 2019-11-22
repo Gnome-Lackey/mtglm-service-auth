@@ -1,6 +1,8 @@
 import * as cognito from "mtglm-service-sdk/build/clients/cognito";
+import { MTGLMDynamoClient } from "mtglm-service-sdk/build/clients/dynamo";
 
 import * as authMapper from "mtglm-service-sdk/build/mappers/auth";
+import * as playerMapper from "mtglm-service-sdk/build/mappers/player";
 
 import { parseToken } from "mtglm-service-sdk/build/utils/token";
 
@@ -16,6 +18,12 @@ import {
   ResendConfirmationCodeBodyRequest,
   SignUpBodyRequest
 } from "mtglm-service-sdk/build/models/Requests";
+
+import { PROPERTIES_PLAYER } from "mtglm-service-sdk/build/constants/mutable_properties";
+
+const { PLAYERS_TABLE_NAME } = process.env;
+
+const dynamo = new MTGLMDynamoClient(PLAYERS_TABLE_NAME, PROPERTIES_PLAYER);
 
 export const login = async (data: LoginBodyRequest): Promise<LoginResponse> => {
   const { userName, password } = data;
@@ -70,6 +78,10 @@ export const signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => 
   const node = authMapper.toNodeSignUp(data);
 
   const uid = await cognito.signUp(node);
+
+  const item = playerMapper.toCreateItem(data, uid);
+
+  dynamo.create({ playerId: item.playerId }, item);
 
   return authMapper.toResponseSignUp(uid, node);
 };
