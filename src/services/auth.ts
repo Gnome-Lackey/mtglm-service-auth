@@ -29,15 +29,6 @@ export const login = async (data: LoginBodyRequest): Promise<LoginResponse> => {
   const authNode = authMapper.toNodeAuth(user);
   const tokensNode = authMapper.toNodeTokens(tokens);
 
-  if (authNode.user.isFirstTimeLogin) {
-    await cognito.updateUserAttribute(AccessToken, [
-      {
-        Name: "custom:firstTimeLogin",
-        Value: "0"
-      }
-    ]);
-  }
-
   return {
     body: authMapper.toResponseLogin(authNode),
     headers: authMapper.toResponseLoginHeaders(tokensNode)
