@@ -4,6 +4,7 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:AdminCreateUser
+      - cognito-idp:ListUsers
     Resource: 
       Fn::Join:
         - "" 
