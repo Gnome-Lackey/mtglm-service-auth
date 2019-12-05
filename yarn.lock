@@ -1962,7 +1962,7 @@ msgpack-lite@0.1.26:
 
 mtglm-service-sdk@Gnome-Lackey/mtglm-service-sdk#develop:
   version "1.0.0"
-  resolved "https://codeload.github.com/Gnome-Lackey/mtglm-service-sdk/tar.gz/97a52eba54d31f1a04a74816b2335e0e5f5c3a4a"
+  resolved "https://codeload.github.com/Gnome-Lackey/mtglm-service-sdk/tar.gz/1cd3dbaebc40a0f54823e98e2a1d4a0e3079b653"
   dependencies:
     "@types/aws-sdk" "^2.7.0"
     "@types/jwt-decode" "^2.2.1"
