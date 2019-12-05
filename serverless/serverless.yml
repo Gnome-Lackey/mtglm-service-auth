@@ -32,6 +32,7 @@ resources:
 
 functions:
   ConfirmRegistration: ${file(partials/functions/confirm_registration.yml)}
+  InitAdmin: ${file(partials/functions/init_admin.yml)}
   Login: ${file(partials/functions/login.yml)}
   Logout: ${file(partials/functions/logout.yml)}
   ResendCode: ${file(partials/functions/resend_code.yml)}

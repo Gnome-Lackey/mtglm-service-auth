@@ -54,6 +54,20 @@ export const confirmRegistration = async (
   }
 };
 
+export const initAdmin = async (): Promise<LambdaResponse> => {
+  try {
+    const result = await authService.initAdmin();
+
+    logSuccess("cognito", "POST init admin account", result);
+
+    return handleSuccess(result);
+  } catch (error) {
+    logFailure("cognito", "POST init admin account", error);
+
+    return handleError(error, "INIT_ADMIN_ACCOUNT");
+  }
+};
+
 export const resendConfirmationCode = async (
   data: ResendConfirmationCodeBodyRequest
 ): Promise<LambdaResponse> => {

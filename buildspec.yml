@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    FUNCTION_NAME: $ENV-mtglm-auth-init-admin
+
 phases:
   install:
     runtime-versions:
@@ -25,4 +29,6 @@ phases:
       - echo "Deploying project ..."
       - cd ./serverless
       - sls deploy --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
+      - cat $FUNCTION_NAME
+      - sls invoke -f $FUNCTION_NAME -l
       - echo "Deployed project on `date`"

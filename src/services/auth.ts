@@ -57,6 +57,16 @@ export const resendConfirmationCode = async (
   return await cognito.resendConfirmationCode(userName);
 };
 
+export const initAdmin = async (): Promise<AuthResponse> => {
+  const result = await cognito.initAdminAccount();
+
+  if (result) {
+    return authMapper.toResponseInitAdmin(result);
+  }
+
+  return { user: null };
+};
+
 export const signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => {
   const node = authMapper.toNodeSignUp(data);
 

@@ -1,0 +1,11 @@
+name: ${self:provider.stage}-mtglm-auth-init-admin
+handler: build/handlers/internal-init-admin.handler
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - cognito-idp:AdminCreateUser
+    Resource: 
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
+          - Ref: "CognitoUserPool"
