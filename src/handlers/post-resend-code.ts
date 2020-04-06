@@ -3,11 +3,13 @@ import { requestAuthMiddleware } from "mtglm-service-sdk/build/middleware/reques
 import { ResendConfirmationCodeBodyRequest } from "mtglm-service-sdk/build/models/Requests";
 import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
 
-import * as authController from "../controllers/auth";
+import AuthController from "../controllers/auth";
+
+const controller = new AuthController();
 
 module.exports.handler = requestAuthMiddleware(
   async (data: ResendConfirmationCodeBodyRequest): Promise<LambdaResponse> => {
-    const response = await authController.resendConfirmationCode(data);
+    const response = await controller.resendConfirmationCode(data);
 
     return response;
   }

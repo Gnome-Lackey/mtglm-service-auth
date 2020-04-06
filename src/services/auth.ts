@@ -1,6 +1,6 @@
-import * as cognito from "mtglm-service-sdk/build/clients/cognito";
+import CognitoClient from "mtglm-service-sdk/build/clients/cognito";
 
-import * as authMapper from "mtglm-service-sdk/build/mappers/auth";
+import AuthMapper from "mtglm-service-sdk/build/mappers/auth";
 
 import { parseToken } from "mtglm-service-sdk/build/utils/token";
 
@@ -17,68 +17,70 @@ import {
   SignUpBodyRequest
 } from "mtglm-service-sdk/build/models/Requests";
 
-export const login = async (data: LoginBodyRequest): Promise<LoginResponse> => {
-  const { userName, password } = data;
+export default class AuthService {
+  private client = new CognitoClient();
 
-  const tokens = await cognito.login(userName, password);
+  private mapper = new AuthMapper();
 
-  const { AccessToken } = tokens;
+  async login(data: LoginBodyRequest): Promise<LoginResponse> {
+    const { userName, password } = data;
 
-  const user = await cognito.getLoggedInUser(AccessToken);
+    const tokens = await this.client.login(userName, password);
 
-  const authNode = authMapper.toNodeAuth(user);
-  const tokensNode = authMapper.toNodeTokens(tokens);
+    const { AccessToken } = tokens;
 
-  return {
-    body: authMapper.toResponseLogin(authNode),
-    headers: authMapper.toResponseLoginHeaders(tokensNode)
-  };
-};
+    const user = await this.client.getLoggedInUser(AccessToken);
 
-export const logout = async (authorization: string): Promise<SuccessResponse> => {
-  const token = parseToken(authorization);
+    const authNode = this.mapper.toNodeAuth(user);
+    const tokensNode = this.mapper.toNodeTokens(tokens);
 
-  return await cognito.logout(token);
-};
-
-export const confirmRegistration = async (
-  data: ConfirmRegistrationBodyRequest
-): Promise<SuccessResponse> => {
-  const { userName, verificationCode } = data;
-
-  return await cognito.confirmRegistration(verificationCode, userName);
-};
-
-export const resendConfirmationCode = async (
-  data: ResendConfirmationCodeBodyRequest
-): Promise<SuccessResponse> => {
-  const { userName } = data;
-
-  return await cognito.resendConfirmationCode(userName);
-};
-
-export const initAdmin = async (): Promise<AuthResponse> => {
-  const result = await cognito.initAdminAccount();
-
-  if (result) {
-    return authMapper.toResponseInitAdmin(result);
+    return {
+      body: this.mapper.toResponseLogin(authNode),
+      headers: this.mapper.toResponseLoginHeaders(tokensNode)
+    };
   }
 
-  return { user: null };
-};
+  async logout(authorization: string): Promise<SuccessResponse> {
+    const token = parseToken(authorization);
 
-export const signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => {
-  const node = authMapper.toNodeSignUp(data);
+    return await this.client.logout(token);
+  }
 
-  const uid = await cognito.signUp(node);
+  async confirmRegistration(data: ConfirmRegistrationBodyRequest): Promise<SuccessResponse> {
+    const { userName, verificationCode } = data;
 
-  return authMapper.toResponseSignUp(uid, node);
-};
+    return await this.client.confirmRegistration(verificationCode, userName);
+  }
 
-export const validate = async (authorization: string): Promise<AuthResponse> => {
-  const token = parseToken(authorization);
+  async resendConfirmationCode(data: ResendConfirmationCodeBodyRequest): Promise<SuccessResponse> {
+    const { userName } = data;
 
-  const result = await cognito.validate(token);
+    return await this.client.resendConfirmationCode(userName);
+  }
 
-  return authMapper.toResponseValidate(result);
-};
+  async initAdmin(): Promise<AuthResponse> {
+    const result = await this.client.initAdminAccount();
+
+    if (result) {
+      return this.mapper.toResponseInitAdmin(result);
+    }
+
+    return { user: null };
+  }
+
+  async signUp(data: SignUpBodyRequest): Promise<AuthResponse> {
+    const node = this.mapper.toNodeSignUp(data);
+
+    const uid = await this.client.signUp(node);
+
+    return this.mapper.toResponseSignUp(uid, node);
+  }
+
+  async validate(authorization: string): Promise<AuthResponse> {
+    const token = parseToken(authorization);
+
+    const result = await this.client.validate(token);
+
+    return this.mapper.toResponseValidate(result);
+  }
+}
