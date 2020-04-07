@@ -1,113 +1,114 @@
 import { logFailure, logSuccess } from "mtglm-service-sdk/build/utils/logger";
 import { handleError, handleSuccess } from "mtglm-service-sdk/build/utils/response";
+
+import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
 import {
   LoginBodyRequest,
   ResendConfirmationCodeBodyRequest,
   SignUpBodyRequest,
   ConfirmRegistrationBodyRequest
 } from "mtglm-service-sdk/build/models/Requests";
-import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
 
-import * as authService from "../services/auth";
+import AuthService from "../services/auth";
 
-export const login = async (data: LoginBodyRequest): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.login(data);
+export default class AuthController {
+  private service = new AuthService();
 
-    logSuccess("cognito", "POST login", result);
+  async login(data: LoginBodyRequest): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.login(data);
 
-    return handleSuccess(result.body, result.headers);
-  } catch (error) {
-    logFailure("cognito", "POST login", error);
+      logSuccess("cognito", "POST login", result);
 
-    return handleError(error, "LOGIN");
+      return handleSuccess(result.body, result.headers);
+    } catch (error) {
+      logFailure("cognito", "POST login", error);
+
+      return handleError(error, "LOGIN");
+    }
   }
-};
 
-export const logout = async (authorization: string): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.logout(authorization);
+  async logout(authorization: string): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.logout(authorization);
 
-    logSuccess("cognito", "POST logout", result);
+      logSuccess("cognito", "POST logout", result);
 
-    return handleSuccess({ message: "Success" });
-  } catch (error) {
-    logFailure("cognito", "POST logout", error);
+      return handleSuccess({ message: "Success" });
+    } catch (error) {
+      logFailure("cognito", "POST logout", error);
 
-    return handleError(error, "LOGOUT");
+      return handleError(error, "LOGOUT");
+    }
   }
-};
 
-export const confirmRegistration = async (
-  data: ConfirmRegistrationBodyRequest
-): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.confirmRegistration(data);
+  async confirmRegistration(data: ConfirmRegistrationBodyRequest): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.confirmRegistration(data);
 
-    logSuccess("cognito", "POST confirm registration", result);
+      logSuccess("cognito", "POST confirm registration", result);
 
-    return handleSuccess({ message: "Success" });
-  } catch (error) {
-    logFailure("cognito", "POST confirm registration", error);
+      return handleSuccess({ message: "Success" });
+    } catch (error) {
+      logFailure("cognito", "POST confirm registration", error);
 
-    return handleError(error, "CONFIRM_REGISTRATION");
+      return handleError(error, "CONFIRM_REGISTRATION");
+    }
   }
-};
 
-export const initAdmin = async (): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.initAdmin();
+  async initAdmin(): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.initAdmin();
 
-    logSuccess("cognito", "POST init admin account", result);
+      logSuccess("cognito", "POST init admin account", result);
 
-    return handleSuccess(result);
-  } catch (error) {
-    logFailure("cognito", "POST init admin account", error);
+      return handleSuccess(result);
+    } catch (error) {
+      logFailure("cognito", "POST init admin account", error);
 
-    return handleError(error, "INIT_ADMIN_ACCOUNT");
+      return handleError(error, "INIT_ADMIN_ACCOUNT");
+    }
   }
-};
 
-export const resendConfirmationCode = async (
-  data: ResendConfirmationCodeBodyRequest
-): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.resendConfirmationCode(data);
+  async resendConfirmationCode(data: ResendConfirmationCodeBodyRequest): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.resendConfirmationCode(data);
 
-    logSuccess("cognito", "POST resend confirmation code", result);
+      logSuccess("cognito", "POST resend confirmation code", result);
 
-    return handleSuccess({ message: "Success" });
-  } catch (error) {
-    logFailure("cognito", "POST resend confirmation code", error);
+      return handleSuccess({ message: "Success" });
+    } catch (error) {
+      logFailure("cognito", "POST resend confirmation code", error);
 
-    return handleError(error, "RESEND_CONFIRMATION_CODE");
+      return handleError(error, "RESEND_CONFIRMATION_CODE");
+    }
   }
-};
 
-export const signUp = async (data: SignUpBodyRequest): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.signUp(data);
+  async signUp(data: SignUpBodyRequest): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.signUp(data);
 
-    logSuccess("cognito", "POST Sign Up", result);
+      logSuccess("cognito", "POST Sign Up", result);
 
-    return handleSuccess(result);
-  } catch (error) {
-    logFailure("cognito", "POST Sign Up", error);
+      return handleSuccess(result);
+    } catch (error) {
+      logFailure("cognito", "POST Sign Up", error);
 
-    return handleError(error, "SIGN_UP");
+      return handleError(error, "SIGN_UP");
+    }
   }
-};
 
-export const validate = async (authorization: string): Promise<LambdaResponse> => {
-  try {
-    const result = await authService.validate(authorization);
+  async validate(authorization: string): Promise<LambdaResponse> {
+    try {
+      const result = await this.service.validate(authorization);
 
-    logSuccess("cognito", "POST validate", result);
+      logSuccess("cognito", "POST validate", result);
 
-    return handleSuccess(result);
-  } catch (error) {
-    logFailure("cognito", "POST validate", error);
+      return handleSuccess(result);
+    } catch (error) {
+      logFailure("cognito", "POST validate", error);
 
-    return handleError(error, "VALIDATE");
+      return handleError(error, "VALIDATE");
+    }
   }
-};
+}
