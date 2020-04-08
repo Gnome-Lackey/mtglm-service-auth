@@ -22,6 +22,9 @@ phases:
       - echo "Compiling typescript files ..."
       - yarn build
       - echo "Compiled files"
+      - echo "Initializing admin account..."
+      - sls invoke -f InitAdmin
+      - echo "admin account created"
       - echo "Deploying project ..."
       - cd ./serverless
       - sls deploy --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
