@@ -60,14 +60,16 @@ export default class AuthService {
     return await this.client.resendConfirmationCode(userName);
   };
 
-  initAdmin = async (): Promise<AuthResponse> => {
+  initAdmin = async (): Promise<SuccessResponse> => {
     const result = await this.client.initAdminAccount();
 
     if (result) {
-      return this.mapper.toResponseInitAdmin(result);
+      console.log("Admin user created", JSON.stringify(result));
+    } else {
+      console.log("Admin already exists. Skipping admin creation.");
     }
 
-    return { user: null };
+    return { message: "Finished admin creation." };
   };
 
   signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => {
