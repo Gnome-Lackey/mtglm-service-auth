@@ -14,7 +14,7 @@ import AuthService from "../services/auth";
 export default class AuthController {
   private service = new AuthService();
 
-  async login(data: LoginBodyRequest): Promise<LambdaResponse> {
+  login = async (data: LoginBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.login(data);
 
@@ -26,9 +26,9 @@ export default class AuthController {
 
       return handleError(error, "LOGIN");
     }
-  }
+  };
 
-  async logout(authorization: string): Promise<LambdaResponse> {
+  logout = async (authorization: string): Promise<LambdaResponse> => {
     try {
       const result = await this.service.logout(authorization);
 
@@ -40,9 +40,9 @@ export default class AuthController {
 
       return handleError(error, "LOGOUT");
     }
-  }
+  };
 
-  async confirmRegistration(data: ConfirmRegistrationBodyRequest): Promise<LambdaResponse> {
+  confirmRegistration = async (data: ConfirmRegistrationBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.confirmRegistration(data);
 
@@ -54,9 +54,9 @@ export default class AuthController {
 
       return handleError(error, "CONFIRM_REGISTRATION");
     }
-  }
+  };
 
-  async initAdmin(): Promise<LambdaResponse> {
+  initAdmin = async (): Promise<LambdaResponse> => {
     try {
       const result = await this.service.initAdmin();
 
@@ -68,9 +68,11 @@ export default class AuthController {
 
       return handleError(error, "INIT_ADMIN_ACCOUNT");
     }
-  }
+  };
 
-  async resendConfirmationCode(data: ResendConfirmationCodeBodyRequest): Promise<LambdaResponse> {
+  resendConfirmationCode = async (
+    data: ResendConfirmationCodeBodyRequest
+  ): Promise<LambdaResponse> => {
     try {
       const result = await this.service.resendConfirmationCode(data);
 
@@ -82,9 +84,9 @@ export default class AuthController {
 
       return handleError(error, "RESEND_CONFIRMATION_CODE");
     }
-  }
+  };
 
-  async signUp(data: SignUpBodyRequest): Promise<LambdaResponse> {
+  signUp = async (data: SignUpBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.signUp(data);
 
@@ -96,9 +98,9 @@ export default class AuthController {
 
       return handleError(error, "SIGN_UP");
     }
-  }
+  };
 
-  async validate(authorization: string): Promise<LambdaResponse> {
+  validate = async (authorization: string): Promise<LambdaResponse> => {
     try {
       const result = await this.service.validate(authorization);
 
@@ -110,5 +112,5 @@ export default class AuthController {
 
       return handleError(error, "VALIDATE");
     }
-  }
+  };
 }
