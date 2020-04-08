@@ -24,7 +24,7 @@ phases:
       - echo "Compiled files"
       - echo "Initializing admin account..."
       - cd ./serverless
-      - sls invoke -f InitAdmin
+      - sls invoke -f InitAdmin --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
       - echo "admin account created"
       - echo "Deploying project ..."
       - sls deploy --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
