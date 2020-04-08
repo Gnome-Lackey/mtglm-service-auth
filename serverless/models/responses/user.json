@@ -9,31 +9,26 @@
       "properties": {
         "name": {
           "type": "string",
-          "title": "User Name Schema",
+          "title": "User Name",
           "pattern": "^[a-zA-Z0-9-'_ ]+$"
         },
         "id": {
           "type": "string",
-          "title": "Password Schema",
+          "title": "User Id",
           "pattern": "^[a-zA-Z0-9-]+$"
         },
         "email": {
           "type": "string",
-          "title": "Email Schema"
+          "title": "Email"
         },
-        "firstName": {
+        "accountType": {
           "type": "string",
-          "title": "Email Schema",
-          "pattern": "^[a-zA-Z0-9-'_ ]+$"
-        },
-        "lastName": {
-          "type": "string",
-          "title": "Email Schema",
+          "title": "Account Type Name",
           "pattern": "^[a-zA-Z0-9-'_ ]+$"
         },
         "isFirstTimeLogin": {
           "type": "boolean",
-          "title": "Email Schema"
+          "title": "First Time Login Flag"
         }
       }
     }

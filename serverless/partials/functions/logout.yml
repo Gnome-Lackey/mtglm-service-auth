@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-logout
+name: ${self:provider.stage}-mtglm-auth-post-logout
 handler: build/handlers/post-logout.handler
 timeout: 10
 tags:
@@ -24,4 +24,7 @@ iamRoleStatements:
     Action:
       - cognito-idp:GlobalSignOut
     Resource: 
-      - ${env:USER_POOL_ARN}
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
+          - Ref: "CognitoUserPool"

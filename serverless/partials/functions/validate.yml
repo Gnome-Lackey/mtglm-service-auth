@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-validate
+name: ${self:provider.stage}-mtglm-auth-post-validate
 handler: build/handlers/post-validate.handler
 tags:
   post: validate

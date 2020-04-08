@@ -5,8 +5,8 @@ Resources:
       EmailVerificationSubject: "MtG League Manager: Verify Account"
       EmailVerificationMessage: "Please use the following code to verify your account: {####}."
       SmsVerificationMessage: "Please use the following code to verify your account: {####}."
-      UserPoolName: ${self:custom.stage}-mtglm-user-pool
-      UsernameAttributes:
+      UserPoolName: ${self:provider.stage}-mtglm-user-pool
+      AliasAttributes:
         - email
       AutoVerifiedAttributes:
         - email
@@ -27,7 +27,7 @@ Resources:
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: ${self:custom.stage}-mtglm-user-pool-client
+      ClientName: ${self:provider.stage}-mtglm-user-pool-client
       UserPoolId:
         Ref: CognitoUserPool
       ExplicitAuthFlows:
@@ -35,10 +35,30 @@ Resources:
       GenerateSecret: false
 
 Outputs:
+  UserPoolName:
+    Value: ${self:provider.stage}-mtglm-user-pool
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolName
+
+  UserPoolArn:
+    Value:
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:"
+          - Ref: "AWS::AccountId"
+          - ":userpool/"
+          - Ref: "CognitoUserPool"
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolArn
+
   UserPoolId:
     Value:
       Ref: CognitoUserPool
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolId
 
   UserPoolClientId:
     Value:
       Ref: CognitoUserPoolClient
+    Export:
+      Name: ${self:provider.stage}-mtglm-UserPoolClientId

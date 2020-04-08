@@ -10,7 +10,7 @@
       "pattern": "^[a-zA-Z0-9-'_ ]+$"
     },
     "verificationCode": {
-      "type": "number",
+      "type": "string",
       "title": "Verification Code Schema"
     }
   }

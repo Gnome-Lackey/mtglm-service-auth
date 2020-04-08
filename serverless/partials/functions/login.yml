@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-login
+name: ${self:provider.stage}-mtglm-auth-post-login
 handler: build/handlers/post-login.handler
 timeout: 10
 tags:
@@ -25,5 +25,8 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:AdminInitiateAuth
-    Resource:
-      - ${env:USER_POOL_ARN}
+    Resource: 
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
+          - Ref: "CognitoUserPool"

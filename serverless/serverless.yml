@@ -7,15 +7,13 @@ provider:
   region: us-east-1
   memorySize: 128
   environment:
-    USER_POOL_ID:
-      Fn::GetAtt:
-        - "CognitoUserPool"
-        - "Arn"
-    CLIENT_ID:
-      Fn::GetAtt:
-        - "CognitoUserPoolClient"
-        - "Arn"
     ALLOWED_ORIGIN: ${env:ALLOWED_ORIGIN}
+    ADMIN_PASS: ${env:ADMIN_PASS}
+    ADMIN_EMAIL: ${env:ADMIN_EMAIL}
+    USER_POOL_ID: 
+      Ref: CognitoUserPool
+    CLIENT_ID: 
+      Ref: CognitoUserPoolClient
 
 package:
   include:
@@ -36,6 +34,7 @@ resources:
 
 functions:
   ConfirmRegistration: ${file(partials/functions/confirm_registration.yml)}
+  InitAdmin: ${file(partials/functions/init_admin.yml)}
   Login: ${file(partials/functions/login.yml)}
   Logout: ${file(partials/functions/logout.yml)}
   ResendCode: ${file(partials/functions/resend_code.yml)}

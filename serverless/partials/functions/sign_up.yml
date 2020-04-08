@@ -1,4 +1,4 @@
-name: ${self:provider.stage}-auth-post-sign-up
+name: ${self:provider.stage}-mtglm-auth-post-sign-up
 handler: build/handlers/post-sign-up.handler
 tags:
   post: validate
@@ -24,5 +24,8 @@ iamRoleStatements:
   - Effect: Allow
     Action:
       - cognito-idp:ListUsers
-    Resource:
-      - ${env:USER_POOL_ARN}
+    Resource: 
+      Fn::Join:
+        - "" 
+        - - "arn:aws:cognito-idp:${self:provider.region}:*:userpool/"
+          - Ref: "CognitoUserPool"
