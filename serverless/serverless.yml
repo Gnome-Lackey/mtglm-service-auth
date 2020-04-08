@@ -10,9 +10,9 @@ provider:
     ALLOWED_ORIGIN: ${env:ALLOWED_ORIGIN}
     ADMIN_PASS: ${env:ADMIN_PASS}
     ADMIN_EMAIL: ${env:ADMIN_EMAIL}
-    USER_POOL_ID: 
+    USER_POOL_ID:
       Ref: CognitoUserPool
-    CLIENT_ID: 
+    CLIENT_ID:
       Ref: CognitoUserPoolClient
 
 package:
@@ -30,7 +30,6 @@ custom:
 
 resources:
   - ${file(partials/cognito.yml)}
-  
 
 functions:
   ConfirmRegistration: ${file(partials/functions/confirm_registration.yml)}
