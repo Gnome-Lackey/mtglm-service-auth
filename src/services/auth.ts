@@ -22,7 +22,7 @@ export default class AuthService {
 
   private mapper = new AuthMapper();
 
-  async login(data: LoginBodyRequest): Promise<LoginResponse> {
+  login = async (data: LoginBodyRequest): Promise<LoginResponse> => {
     const { userName, password } = data;
 
     const tokens = await this.client.login(userName, password);
@@ -38,27 +38,29 @@ export default class AuthService {
       body: this.mapper.toResponseLogin(authNode),
       headers: this.mapper.toResponseLoginHeaders(tokensNode)
     };
-  }
+  };
 
-  async logout(authorization: string): Promise<SuccessResponse> {
+  logout = async (authorization: string): Promise<SuccessResponse> => {
     const token = parseToken(authorization);
 
     return await this.client.logout(token);
-  }
+  };
 
-  async confirmRegistration(data: ConfirmRegistrationBodyRequest): Promise<SuccessResponse> {
+  confirmRegistration = async (data: ConfirmRegistrationBodyRequest): Promise<SuccessResponse> => {
     const { userName, verificationCode } = data;
 
     return await this.client.confirmRegistration(verificationCode, userName);
-  }
+  };
 
-  async resendConfirmationCode(data: ResendConfirmationCodeBodyRequest): Promise<SuccessResponse> {
+  resendConfirmationCode = async (
+    data: ResendConfirmationCodeBodyRequest
+  ): Promise<SuccessResponse> => {
     const { userName } = data;
 
     return await this.client.resendConfirmationCode(userName);
-  }
+  };
 
-  async initAdmin(): Promise<AuthResponse> {
+  initAdmin = async (): Promise<AuthResponse> => {
     const result = await this.client.initAdminAccount();
 
     if (result) {
@@ -66,21 +68,21 @@ export default class AuthService {
     }
 
     return { user: null };
-  }
+  };
 
-  async signUp(data: SignUpBodyRequest): Promise<AuthResponse> {
+  signUp = async (data: SignUpBodyRequest): Promise<AuthResponse> => {
     const node = this.mapper.toNodeSignUp(data);
 
     const uid = await this.client.signUp(node);
 
     return this.mapper.toResponseSignUp(uid, node);
-  }
+  };
 
-  async validate(authorization: string): Promise<AuthResponse> {
+  validate = async (authorization: string): Promise<AuthResponse> => {
     const token = parseToken(authorization);
 
     const result = await this.client.validate(token);
 
     return this.mapper.toResponseValidate(result);
-  }
+  };
 }

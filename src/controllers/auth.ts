@@ -1,5 +1,5 @@
-import { logFailure, logSuccess } from "mtglm-service-sdk/build/utils/logger";
-import { handleError, handleSuccess } from "mtglm-service-sdk/build/utils/response";
+import MTGLMLogger from "mtglm-service-sdk/build/utils/logger";
+import ResponseHandler from "mtglm-service-sdk/build/utils/response";
 
 import { LambdaResponse } from "mtglm-service-sdk/build/models/Lambda";
 import {
@@ -13,102 +13,106 @@ import AuthService from "../services/auth";
 
 export default class AuthController {
   private service = new AuthService();
+  private logger = new MTGLMLogger();
+  private responseHandler = new ResponseHandler();
 
-  async login(data: LoginBodyRequest): Promise<LambdaResponse> {
+  login = async (data: LoginBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.login(data);
 
-      logSuccess("cognito", "POST login", result);
+      this.logger.success("cognito", "POST login", result);
 
-      return handleSuccess(result.body, result.headers);
+      return this.responseHandler.success(result.body, result.headers);
     } catch (error) {
-      logFailure("cognito", "POST login", error);
+      this.logger.failure("cognito", "POST login", error);
 
-      return handleError(error, "LOGIN");
+      return this.responseHandler.error(error, "LOGIN");
     }
-  }
+  };
 
-  async logout(authorization: string): Promise<LambdaResponse> {
+  logout = async (authorization: string): Promise<LambdaResponse> => {
     try {
       const result = await this.service.logout(authorization);
 
-      logSuccess("cognito", "POST logout", result);
+      this.logger.success("cognito", "POST logout", result);
 
-      return handleSuccess({ message: "Success" });
+      return this.responseHandler.success({ message: "Success" });
     } catch (error) {
-      logFailure("cognito", "POST logout", error);
+      this.logger.failure("cognito", "POST logout", error);
 
-      return handleError(error, "LOGOUT");
+      return this.responseHandler.error(error, "LOGOUT");
     }
-  }
+  };
 
-  async confirmRegistration(data: ConfirmRegistrationBodyRequest): Promise<LambdaResponse> {
+  confirmRegistration = async (data: ConfirmRegistrationBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.confirmRegistration(data);
 
-      logSuccess("cognito", "POST confirm registration", result);
+      this.logger.success("cognito", "POST confirm registration", result);
 
-      return handleSuccess({ message: "Success" });
+      return this.responseHandler.success({ message: "Success" });
     } catch (error) {
-      logFailure("cognito", "POST confirm registration", error);
+      this.logger.failure("cognito", "POST confirm registration", error);
 
-      return handleError(error, "CONFIRM_REGISTRATION");
+      return this.responseHandler.error(error, "CONFIRM_REGISTRATION");
     }
-  }
+  };
 
-  async initAdmin(): Promise<LambdaResponse> {
+  initAdmin = async (): Promise<LambdaResponse> => {
     try {
       const result = await this.service.initAdmin();
 
-      logSuccess("cognito", "POST init admin account", result);
+      this.logger.success("cognito", "POST init admin account", result);
 
-      return handleSuccess(result);
+      return this.responseHandler.success(result);
     } catch (error) {
-      logFailure("cognito", "POST init admin account", error);
+      this.logger.failure("cognito", "POST init admin account", error);
 
-      return handleError(error, "INIT_ADMIN_ACCOUNT");
+      return this.responseHandler.error(error, "INIT_ADMIN_ACCOUNT");
     }
-  }
+  };
 
-  async resendConfirmationCode(data: ResendConfirmationCodeBodyRequest): Promise<LambdaResponse> {
+  resendConfirmationCode = async (
+    data: ResendConfirmationCodeBodyRequest
+  ): Promise<LambdaResponse> => {
     try {
       const result = await this.service.resendConfirmationCode(data);
 
-      logSuccess("cognito", "POST resend confirmation code", result);
+      this.logger.success("cognito", "POST resend confirmation code", result);
 
-      return handleSuccess({ message: "Success" });
+      return this.responseHandler.success({ message: "Success" });
     } catch (error) {
-      logFailure("cognito", "POST resend confirmation code", error);
+      this.logger.failure("cognito", "POST resend confirmation code", error);
 
-      return handleError(error, "RESEND_CONFIRMATION_CODE");
+      return this.responseHandler.error(error, "RESEND_CONFIRMATION_CODE");
     }
-  }
+  };
 
-  async signUp(data: SignUpBodyRequest): Promise<LambdaResponse> {
+  signUp = async (data: SignUpBodyRequest): Promise<LambdaResponse> => {
     try {
       const result = await this.service.signUp(data);
 
-      logSuccess("cognito", "POST Sign Up", result);
+      this.logger.success("cognito", "POST Sign Up", result);
 
-      return handleSuccess(result);
+      return this.responseHandler.success(result);
     } catch (error) {
-      logFailure("cognito", "POST Sign Up", error);
+      this.logger.failure("cognito", "POST Sign Up", error);
 
-      return handleError(error, "SIGN_UP");
+      return this.responseHandler.error(error, "SIGN_UP");
     }
-  }
+  };
 
-  async validate(authorization: string): Promise<LambdaResponse> {
+  validate = async (authorization: string): Promise<LambdaResponse> => {
     try {
       const result = await this.service.validate(authorization);
 
-      logSuccess("cognito", "POST validate", result);
+      this.logger.success("cognito", "POST validate", result);
 
-      return handleSuccess(result);
+      return this.responseHandler.success(result);
     } catch (error) {
-      logFailure("cognito", "POST validate", error);
+      this.logger.failure("cognito", "POST validate", error);
 
-      return handleError(error, "VALIDATE");
+      return this.responseHandler.error(error, "VALIDATE");
     }
-  }
+  };
 }
