@@ -26,3 +26,6 @@ phases:
       - cd ./serverless
       - sls deploy --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
       - echo "Deployed project on `date`"
+      - echo "Initializing admin account..."
+      - sls invoke -f InitAdmin --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
+      - echo "build finished"
