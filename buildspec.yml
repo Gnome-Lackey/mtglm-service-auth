@@ -23,9 +23,9 @@ phases:
       - yarn build
       - echo "Compiled files"
       - echo "Initializing admin account..."
+      - cd ./serverless
       - sls invoke -f InitAdmin
       - echo "admin account created"
       - echo "Deploying project ..."
-      - cd ./serverless
       - sls deploy --verbose --key $AWS_ID --secret $AWS_SECRET --stage $ENV
       - echo "Deployed project on `date`"
