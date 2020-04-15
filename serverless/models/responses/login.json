@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Login Response Schema",
+  "properties": {
+    "headers": {
+      "X-ID-Token": {
+        "type": "string",
+        "title": "Header X-ID-Token"
+      },
+      "X-Access-Token": {
+        "type": "string",
+        "title": "Header X-Access-Token"
+      },
+      "set-cookie": {
+        "type": "string",
+        "title": "Header set-cookie"
+      },
+      "Access-Control-Expose-Headers": {
+        "type": "string",
+        "title": "Header Access-Control-Expose-Headers"
+      }
+    },
+    "body": {
+      "user": {
+        "type": "object",
+        "title": "User Schema",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "User Id",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "userName": {
+            "type": "string",
+            "title": "User Name",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "displayName": {
+            "type": "string",
+            "title": "Display Name",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "firstName": {
+            "type": "string",
+            "title": "Given Name",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "lastName": {
+            "type": "string",
+            "title": "Surname",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "accountType": {
+            "type": "string",
+            "title": "Account Type Name",
+            "pattern": "^[a-zA-Z0-9-'_ ]+$"
+          },
+          "isFirstTimeLogin": {
+            "type": "boolean",
+            "title": "First Time Login Flag"
+          }
+        }
+      }
+    }
+  }
+}

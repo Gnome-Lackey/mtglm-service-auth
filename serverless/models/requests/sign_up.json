@@ -2,11 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "title": "Sign Up Request Schema",
-  "required": [
-    "userName", 
-    "password",
-    "email"
-  ],
+  "required": ["userName", "password", "email"],
   "properties": {
     "userName": {
       "type": "string",
