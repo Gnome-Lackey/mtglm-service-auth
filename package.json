@@ -25,7 +25,7 @@
   "dependencies": {
     "@types/aws-sdk": "^2.7.0",
     "@types/node": "^12.7.12",
-    "aws-sdk": "^2.482.0",
+    "aws-sdk": "^2.814.0",
     "global": "^4.4.0",
     "mtglm-service-sdk": "Gnome-Lackey/mtglm-service-sdk#dev",
     "serverless-aws-documentation": "^1.1.0",
